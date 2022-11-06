@@ -19,6 +19,10 @@ import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.firebase.auth.FirebaseAuth
 import com.zahirar.challengechap6.R
 import com.zahirar.challengechap6.databinding.ActivityProfileUserBinding
 import com.zahirar.challengechap6.viewmodel.BlurViewModel
@@ -36,6 +40,9 @@ class ProfileUserActivity : AppCompatActivity() {
     var id by Delegates.notNull<Int>()
     lateinit var oldPassword : String
     private val REQUEST_CODE_PERMISSION = 100
+
+    private lateinit var firebaseAuth: FirebaseAuth
+    lateinit var mGoogleSignInClient: GoogleSignInClient
 
     private val cameraResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -55,6 +62,15 @@ class ProfileUserActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         viewModel = ViewModelProvider(this).get(ViewModelUser::class.java)
+
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.default_web_client_id))
+            .requestEmail()
+            .build()
+
+        mGoogleSignInClient= GoogleSignIn.getClient(this,gso)
+
+        firebaseAuth = FirebaseAuth.getInstance()
 
         getDataUser()
 
@@ -172,6 +188,8 @@ class ProfileUserActivity : AppCompatActivity() {
             .setMessage("Are you sure want to logout?")
             .setPositiveButton("Yes") { dialog, which ->
                 viewModel.removeIsLoginStatus()
+                firebaseAuth.signOut()
+                mGoogleSignInClient.signOut()
                 startActivity(Intent(this, LoginActivity::class.java))
             }
             .setNegativeButton("No") { dialog, which ->

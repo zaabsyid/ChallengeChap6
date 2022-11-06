@@ -22,6 +22,8 @@ class SplashScreenActivity : AppCompatActivity() {
         binding = ActivitySplashScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+//        throw RuntimeException("Test Crash") // Force a crash
+
         userVM = ViewModelProvider(this).get(ViewModelUser::class.java)
         var isLogin = false
         userVM.checkIsLogin(this)
