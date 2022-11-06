@@ -21,6 +21,9 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+// Saya tidak tau kenapa product flavornya gabisa di gradle, jadi mohon maaf
+// saya tidak bisa menerapkan product flavor di project ini, tapi saya mengerti konsep dan cara menerapkannya
+
 //    flavorDimensions("movie")
 //    productFlavors {
 //        userfree {
