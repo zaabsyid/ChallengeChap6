@@ -21,6 +21,18 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+//    flavorDimensions("movie")
+//    productFlavors {
+//        userfree {
+//            applicationIdSuffix ".userfree"
+//            dimension "movie"
+//        }
+//        userpaid {
+//            applicationIdSuffix ".userpaid"
+//            dimension "movie"
+//        }
+//    }
+
     buildTypes {
         release {
             minifyEnabled false
